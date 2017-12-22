@@ -50,6 +50,7 @@ def gpu_memory_usage_extract(file_name, ret_dict, num_gpus):
 def get_cpu_mem_usage_from_process(pid, cpu_usage):
     """Get CPU memory usage given process id, result append to a mutable list."""
     if not psutil.pid_exists(pid):
+        print ("Amol the process %d does not exist" % pid)
         return
     proc = psutil.Process(pid)
     if proc.is_running():
@@ -85,6 +86,7 @@ class RepeatedQuery:
 class Profiler(object):
     """The CPU GPU memory profiler"""
     def __init__(self, ret_dict, num_gpus, process_id):
+        print ("Amol Profiler Init called with %d gpus %d process_id" % num_gpus, process_id)
         self.__ret_dict = ret_dict
         self.num_gpus = num_gpus
         self.cpu_usage = []
@@ -96,6 +98,7 @@ class Profiler(object):
         )
 
     def __enter__(self):
+        print ("Amol Profiler Entered")
         if self.num_gpus < 1:
             return self
         open("output.csv", 'a').close()
@@ -109,6 +112,7 @@ class Profiler(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.cpu_mem_repeat_query.stop()
         if len(self.cpu_usage) == 0:
+            print ("Amol Profiler exited because cpu_usage length is 0")
             raise CommandExecutionError
         cpu_usage = sum(self.cpu_usage) / len(self.cpu_usage)
         self.__ret_dict['cpu_memory_usage'] = cpu_usage
