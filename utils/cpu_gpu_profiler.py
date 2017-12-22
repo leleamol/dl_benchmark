@@ -86,7 +86,7 @@ class RepeatedQuery:
 class Profiler(object):
     """The CPU GPU memory profiler"""
     def __init__(self, ret_dict, num_gpus, process_id):
-        print ("Amol Profiler Init called with %d gpus %d process_id" % num_gpus, process_id)
+        print ("Amol Profiler Init called with %d process_id" % process_id)
         self.__ret_dict = ret_dict
         self.num_gpus = num_gpus
         self.cpu_usage = []
